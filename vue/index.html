@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue실행결과페이지!</title>
+</head>
+
+<body>
+    <div id="app">
+        <span v-bind:title="title">{{message}}</span>
+        <p v-if="seen">나를 볼수 있음.</p>
+        <ol>
+            <li v-for="doit in todos">{{doit.title}} / {{doit.like}}</li>
+        </ol>
+        <button v-on:click="reverseMessage">Reverse</button>
+        <input v-model="message" type="text">
+        <ul>
+            <todo-item></todo-item>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{todo.title}}</li>'
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: '안녕하세요 Vueeee!!',
+                title: 'Greeting message',
+                seen: 10,
+                todos: [{
+                    title: 'javascript',
+                    like: 80
+                }, {
+                    title: 'javascript',
+                    like: 80
+                }, {
+                    title: 'javascript',
+                    like: 80
+                }]
+            },
+            methods: {
+                reverseMessage: function () {
+                    this._data.message = this.message.split('').reverse().join('');
+                }
+            }
+        })
+
+        app.todos.push({
+            title: 'goog',
+            like: 99
+        })
+
+        console.log(app.$children)
+    </script>
+</body>
+
+</html>
