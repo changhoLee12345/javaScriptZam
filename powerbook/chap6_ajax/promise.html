@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //프로미스 인스턴스 리턴
+        function asyncWork(value) {
+            console.log('promise', value);
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    value -= 20;
+                    if (value > 50) {
+                        resolve(value);
+                    } else {
+                        reject(value);
+                    }
+                }, 1000);
+            });
+        }
+
+        //프로미스 요청/응답 체인
+        asyncWork(100)
+            .then((value) => {
+                console.log(value);
+                return asyncWork(value);
+            }).then((value) => {
+                console.log(value);
+                return asyncWork(value);
+            }).then((value) => {
+                console.log(value);
+                return asyncWork(value);
+            }).catch(err => {
+                console.log('catch:' + err);
+            });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="order" name='myname' id='myform' method='post'>
+        <input type="hidden" name="key" value="">
+        <input type="text" name="name" id="">
+        <input type="tel" name="tel" id="" size="13" maxlength="13">
+        <fieldset name='options'>
+            <legend>상품옵션</legend>
+            대과<input type="radio" name="size" id="" value="대과">
+            중과<input type="radio" name="size" id="" value="중과" checked>
+            선물상자<input type="checkbox" name="giftpack" id="" value="선물상자">
+            보자기포장<input type="checkbox" name="giftpack" id="" value="보자기포장">
+            <select name="weight" id="">
+                <option value="1" selected>1KG</option>
+                <option value="5">5KG</option>
+                <option value="10">10KG</option>
+            </select>
+        </fieldset>
+        <fieldset name='buttons'>
+            <button type="button" name="order">주문</button>
+            <button type="button" name="wishlist">찜해놓기</button>
+        </fieldset>
+    </form>
+
+    <script>
+        const myform = document.forms['myname'];
+        console.log(myform);
+        myform.elements['name'].value = 'hong'
+        myform.elements.size[0].checked = true;
+        console.log(myform.elements['size'].value);
+        myform.elements['giftpack'][0].checked = true;
+        myform.elements['giftpack'][1].checked = true;
+        let giftpack = [];
+        myform.elements.giftpack.forEach((itm, ind) => {
+            if (itm.checked) {
+                giftpack.push(itm.value)
+            }
+        });
+        console.log(giftpack)
+
+        let buttons = myform.buttons;
+        console.log(buttons);
+        buttons.addEventListener('click', function (e) {
+            switch (e.target.name) {
+                case 'order':
+                    console.log('주문폼 주문 저장');
+                    break;
+                case 'wishlist':
+                    console.log('찜해놓기에 저장');
+                    break;
+            }
+        })
+    </script>
+</body>
+
+</html>

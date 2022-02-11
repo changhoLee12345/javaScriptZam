@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <iframe src="" frameborder="0" id="newframe"></iframe>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let newdoc = document.implementation.createHTMLDocument('HTML Document');
+            let div = document.createElement('div');
+            div.innerHTML = '<span>HTML Sample Doc</span>';
+            newdoc.body.appendChild(div);
+            targetdoc = document.getElementById('newframe').contentDocument;
+            let newnode = targetdoc.importNode(newdoc.documentElement, true);
+            targetdoc.replaceChild(newnode, targetdoc.documentElement);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form action="./frame.html" name='myform' id='myform' method='post' target='runframe'>
+        <input type="text" name="userid" id="" value="user1">
+        <input type="password" name="password" id="" value="1234">
+        <button type="submit">저장</button>
+    </form>
+    <iframe id="runframe" src="./frame.html" frameborder="0"></iframe>
+    <div id="message"></div>
+
+    <script>
+        const runframe = document.getElementById('runframe');
+        runframe.addEventListener('load', function (e) {
+            console.log(e.target + ' iframe loaded!');
+            const doc = e.target.contentDocument;
+
+            const el = document.createElement('p');
+            const txt = document.createTextNode('아이프레임 페이지');
+            el.append(txt);
+
+            runframe.contentDocument.body.append(el);
+
+        })
+    </script>
+</body>
+
+</html>

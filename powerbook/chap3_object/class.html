@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Student {
+            constructor() {}
+            set name(name) {
+                this._name = name;
+            }
+            get name() {
+                return this._name;
+            }
+            set age(age) {
+                this._age = age;
+            }
+            get age() {
+                return this._age;
+            }
+        }
+
+        var s1 = new Student();
+
+        Object.defineProperty(s1, 'score', {
+            get: function () {
+                return this._score;
+            },
+            set: function (score) {
+                this._score = score;
+            }
+        })
+
+        s1.name = 'Hong';
+        s1.age = 22;
+        s1.score = 88;
+        console.log(s1.name);
+        console.log(s1.age);
+        console.log(s1.score);
+    </script>
+</body>
+
+</html>

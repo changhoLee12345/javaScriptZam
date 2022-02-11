@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let ary = [{
+            name: 'hong',
+            age: 20,
+            fnc: showInfo
+        }, {
+            name: 'hwang',
+            age: 21,
+            fnc: showFnc
+        }];
+
+        function showInfo(param) {
+            return param;
+        }
+
+        function showFnc(param) {
+            return param;
+        }
+    </script>
+</head>
+
+<body>
+    <script>
+        let str = '<table border=1>'
+        for (let obj of ary) {
+            str += '<tr>';
+            for (let field in obj) {
+                console.log(field)
+                if (field == 'fnc') {
+                    str += '<td>' + obj[field]('hello') + '</td>';
+                } else {
+                    str += '<td>' + obj[field] + '</td>';
+                }
+            }
+            str += '</tr>';
+        }
+        document.write(str);
+    </script>
+</body>
+
+</html>

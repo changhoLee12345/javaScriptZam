@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>핀테크테스트(4강_2021.11.26)</title>
+    <style>
+        #container {
+            border: 1px dotted green;
+            width: 55%;
+            padding: 10px;
+            margin: 50px auto;
+        }
+
+        #add {
+            border: 1px solid red;
+        }
+
+        #add .column {
+            float: left;
+            width: 80%;
+        }
+
+        #add .row {
+            margin: 5px;
+        }
+
+        #add .row label {
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            font-size: 1.2em;
+            background-color: yellow;
+        }
+
+        #add .row input:not([type="button"]) {
+            width: 65%;
+            height: 30px;
+        }
+
+        #add .btns {
+            /* border: 1px solid teal; */
+            width: 20%;
+            height: 100px;
+            padding-top: 50px;
+            /* display: inline-block; */
+            float: right;
+        }
+
+        #add .btns input[type="button"] {
+            display: inline-block;
+            width: 50%;
+            height: 35px;
+            font-size: 1.2rem;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        #list {
+            border: 1px solid blue;
+            clear: both;
+        }
+
+        #list .title ul {
+            list-style-type: none;
+            border: 1px dotted gray;
+            padding: 10px 50px;
+            font-size: 1.2rem;
+            background-color: grey;
+            color: honeydew;
+        }
+
+        #list .title ul li {
+            display: inline-block;
+            width: 100px;
+        }
+
+        #list .title ul li:nth-child(3) {
+            display: inline-block;
+            width: 200px;
+        }
+
+        #list .row ul {
+            list-style-type: none;
+            border: 1px dotted gray;
+            padding: 10px 50px;
+        }
+
+        #list .row ul li {
+            display: inline-block;
+            width: 100px;
+        }
+
+        #list .row ul li:nth-child(3) {
+            display: inline-block;
+            width: 200px;
+        }
+
+        #list .row button {
+            width: 100px;
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="add">
+            <form action="">
+                <div class="column">
+                    <div class="row">
+                        <label for="">도서코드</label>
+                        <input type="text" name="" id="">
+                    </div>
+                    <div class="row">
+                        <label for="">도서명</label>
+                        <input type="text" name="" id="">
+                    </div>
+                    <div class="row">
+                        <label for="">저자</label>
+                        <input type="text" name="" id="">
+                    </div>
+                    <div class="row">
+                        <label for="">출판사</label>
+                        <input type="text" name="" id="">
+                    </div>
+                    <div class="row">
+                        <label for="">금액</label>
+                        <input type="text" name="" id="">
+                    </div>
+                </div>
+                <div class="btns">
+                    <input type="button" value="저장">
+                    <input type="button" value="선택삭제">
+                </div>
+            </form>
+        </div>
+        <div id="list">
+            <div class="title">
+                <ul>
+                    <li><input type="checkbox"></li>
+                    <li>도서코드</li>
+                    <li>도서명</li>
+                    <li>저자</li>
+                    <li>출판사</li>
+                    <li>가격</li>
+                    <li>삭제</li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul>
+                    <li><input type="checkbox"></li>
+                    <li>P12301285</li>
+                    <li>이것이 자바다</li>
+                    <li>홍성문</li>
+                    <li>신흥출판사</li>
+                    <li>25,000원</li>
+                    <li><button>삭제</button></li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul>
+                    <li><input type="checkbox"></li>
+                    <li>P12301285</li>
+                    <li>이것이 자바다</li>
+                    <li>홍성문</li>
+                    <li>신흥출판사</li>
+                    <li>25,000원</li>
+                    <li><button>삭제</button></li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul>
+                    <li><input type="checkbox"></li>
+                    <li>P12301285</li>
+                    <li>이것이 자바다</li>
+                    <li>홍성문</li>
+                    <li>신흥출판사</li>
+                    <li>25,000원</li>
+                    <li><button>삭제</button></li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul>
+                    <li><input type="checkbox"></li>
+                    <li>P12301285</li>
+                    <li>이것이 자바다</li>
+                    <li>홍성문</li>
+                    <li>신흥출판사</li>
+                    <li>25,000원</li>
+                    <li><button>삭제</button></li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul>
+                    <li><input type="checkbox"></li>
+                    <li>P12301285</li>
+                    <li>이것이 자바다</li>
+                    <li>홍성문</li>
+                    <li>신흥출판사</li>
+                    <li>25,000원</li>
+                    <li><button>삭제</button></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

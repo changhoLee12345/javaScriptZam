@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const formData = new FormData();
+        formData.append('name', 'zerocho');
+        formData.append('item', 'orange');
+        formData.append('item', 'melon');
+
+        (async () => {
+            try {
+                let nod = encodeURIComponent('노드');
+                console.log(decodeURIComponent(nod))
+                const result = await axios.post(
+                    `https://www.zerocho.com/api/search/${encodeURIComponent('노드')}`);
+                console.log(result);
+                console.log(result.data);
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <ul>
+        <li data-id='1' data-user-job='programmer'>Zero</li>
+        <li data-id='2' data-user-job='designer'>Nero</li>
+        <li data-id='3' data-user-job='producer'>Hero</li>
+        <li data-id='4' data-user-job='ceo'>Kero</li>
+    </ul>
+    <script>
+        for (let i = 0; i < 4; i++)
+            console.log(document.querySelectorAll('li')[i].dataset.userJob)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function orderSet(burger, beverage) {
+        //     console.log(`set: ${burger}, ${beverage}`)
+        // }
+        // orderSet('치즈버거', '콜라');
+
+        function orderSet(burger) {
+            return function (beverage) {
+                console.log(`set: ${burger}, ${beverage}`)
+            }
+        }
+
+        let order = orderSet('치즈버거세트');
+        order('콜라');
+        order('커피');
+        orderSet('치즈버거세트')('사이다');
+
+        function sum(num1) {
+            return function (num2) {
+                return num1 + num2;
+            }
+        }
+
+        let firstVal = sum(3);
+        let result = firstVal(3);
+        console.log(result);
+    </script>
+</body>
+
+</html>
