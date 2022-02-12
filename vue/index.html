@@ -10,55 +10,92 @@
 
 <body>
     <div id="app">
-        <span v-bind:title="title">{{message}}</span>
-        <p v-if="seen">나를 볼수 있음.</p>
-        <ol>
-            <li v-for="doit in todos">{{doit.title}} / {{doit.like}}</li>
-        </ol>
-        <button v-on:click="reverseMessage">Reverse</button>
-        <input v-model="message" type="text">
-        <ul>
-            <todo-item></todo-item>
-        </ul>
+        <div class="static" v-bind:class="classObject">dest</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
     <script>
-        Vue.component('todo-item', {
-            props: ['todo'],
-            template: '<li>{{todo.title}}</li>'
-        })
-
-        var app = new Vue({
+        var vm = new Vue({
             el: '#app',
             data: {
-                message: '안녕하세요 Vueeee!!',
-                title: 'Greeting message',
-                seen: 10,
-                todos: [{
-                    title: 'javascript',
-                    like: 80
-                }, {
-                    title: 'javascript',
-                    like: 80
-                }, {
-                    title: 'javascript',
-                    like: 80
-                }]
+                active: 'hello',
+                isActive: true,
+                hasError: true,
+                error: null
+            },
+            created: function () {
+                this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+            },
+            computed: {
+                reverseMessage: function () {
+                    // return this.message.split('').reverse().join('');
+                    return Date.now();
+                },
+                fullName: {
+                    get: function () {
+                        return this.firstName + ' ' + this.lastName;
+                    },
+                    set: function (newValue) {
+                        var names = newValue.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[1];
+                    }
+                },
+                classObject: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            },
+            watch: {
+                //     firstName: function (val) {
+                //         this.fullName = val + ' ' + this.lastName;
+                //     },
+                //     lastName: function (val) {
+                //         this.fullName = this.firstName + ' ' + val;
+                //     }
+                question: function (newQuestion) {
+                    this.answer = '입력을 기다리는 중...';
+                    this.debouncedGetAnswer();
+                }
             },
             methods: {
-                reverseMessage: function () {
-                    this._data.message = this.message.split('').reverse().join('');
+                rMessage: function () {
+                    return this.message.split('').reverse().join('');
+                },
+                getAnswer: function () {
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = '질문에는 일반적으로 물음표가 포함됩니다.;-';
+                        return;
+                    }
+                    this.answer = '생각중...';
+                    var vme = this;
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (response) {
+                            console.log(this, response);
+                            vme.answer = _.capitalize(response.data.answer)
+                            vme.image = response.data.image;
+                        })
+                        .catch(function (error) {
+                            vme.answer = '에러! api요청에 오류가 있습니다. ' + error;
+                        })
+                },
+                classObjects: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': true
+                    }
                 }
             }
-        })
+        });
 
-        app.todos.push({
-            title: 'goog',
-            like: 99
-        })
-
-        console.log(app.$children)
+        vm.message = 'Hello';
+        // vm.firstName = 'Foo';
+        // vm.lastName = 'Bar';
+        vm.fullName = 'scott tiger';
     </script>
 </body>
 
