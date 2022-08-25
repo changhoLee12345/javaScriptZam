@@ -7,4 +7,4 @@ let tr = makeTr({
     name: 'hong',
     age: 20
 });
-console.log(tr);
+module(tr);
