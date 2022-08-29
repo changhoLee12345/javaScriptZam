@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 클로저의 형식.
+        function outerFunc(name) {
+            let saying = name + ' 안녕!';
+            return function () {
+                return saying;
+            }
+        }
+        let closure1 = outerFunc('Hong');
+        let closure2 = outerFunc('Park');
+
+        console.log(closure1())
+        console.log(closure2());
+
+        function initValue() {
+            let cnt = 0;
+
+            return function() {
+                cnt++;
+                console.log(cnt);
+            }
+        }
+        let cntPlus = initValue();
+        cntPlus();
+        cntPlus();
+        cntPlus();
+    </script>
+</body>
+
+</html>

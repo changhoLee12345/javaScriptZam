@@ -6,12 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="object.js"></script>
+    <!-- <script src="object.js"></script> -->
 </head>
 
 <body>
 
     <div id="show"></div>
+
+    <script>
+        // 객체의 주소 복사.
+        let originObj = {
+            name: 'Park',
+            age: 10,
+            changeAge() {
+                this.age += 1;
+            }
+        }
+        let cloneObj = originObj;
+
+        cloneObj.name = 'Hong';
+        console.log(originObj.name);
+
+        originObj.changeAge();
+        console.log(cloneObj.age);
+
+        // 객체의 복사.
+        let copyObj  = Object.assign({}, originObj);
+        copyObj.name = 'Choi';
+        console.log(originObj.name)
+
+        originObj.changeAge();
+        console.log(copyObj.age)
+
+    </script>
 
 </body>
 
