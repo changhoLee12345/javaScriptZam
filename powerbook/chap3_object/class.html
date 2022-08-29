@@ -10,15 +10,50 @@
 
 <body>
     <script>
+        // 상품종류: 가로*세로*금액 => 계산.
+        class Estimate {
 
-        
-        class Student {
-            constructor() {
+            constructor(param) {
+                this.unit = param;
             }
-            set name(name) {
+
+            getEstimate(unitType, width, height) {
+                let priceInfo = this.unit.find(function (item) {
+                    return item.type == unitType;
+                });
+                return priceInfo.price * width * height;
+            }
+
+            addUnit(unit) {
+                this.unit.push(unit);
+            }
+
+        }
+
+        let unitInfo = [{
+            type: 'wood',
+            price: 100
+        }, {
+            type: 'iron',
+            price: 200
+        }, {
+            type: 'plastic',
+            price: 300
+        }]
+
+        const estimate = new Estimate(unitInfo);
+        let result = estimate.getEstimate('wood', 20, 20);
+        console.log(result);
+
+        /////////////////////////////////////////////////
+
+        // getter/ setter 속성지정.
+        class Student {
+            constructor() {}
+            set name(name) { // 쓰기.
                 this._name = name;
             }
-            get name() {
+            get name() { // 읽기.
                 return this._name;
             }
             set age(age) {
@@ -36,16 +71,36 @@
                 return this._score;
             },
             set: function (score) {
-                this._score = score;
-            }
+                if (score < 0) {
+                    console.log('0보다 큰값을 지정.');
+                } else if (score > 100) {
+                    console.log('100보다 작은값을 지정.');
+                } else {
+                    this._score = score;
+                }
+            },
+            enumerable: true, // Object.key()로 속성 나열 시 해당 속성 표시.
+            configurable: true // delete 연산자로 속성 키 삭제 가능 여부 설정.
         })
 
         s1.name = 'Hong';
-        s1.age = 22;
-        s1.score = 88;
-        console.log(s1.name);
-        console.log(s1.age);
-        console.log(s1.score);
+        console.log('이름: ' + s1.name);
+        s1.age = -22;
+        console.log('나이: ' + s1.age);
+        s1.score = -88;
+        console.log('점수: ' + s1.score);
+        console.log(Object.keys(s1));
+        delete s1.score;
+        console.log(Object.keys(s1));
+
+        Object.defineProperty(s1, 'gender', {
+            value: 'male',
+            writable: true
+        })
+        console.log(s1.gender)
+        s1.gender = 'female';
+        console.log(s1.gender)
+        /////////////////////////////////////////////////////////
     </script>
 </body>
 
