@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <script>
+        // mdn 사이트의 bind() 예제.
+        const module = {
+            x: 42,
+            getX: function () {
+                return this.x;
+            }
+        };
+
+        const unboundGetX = module.getX;
+        console.log(unboundGetX()); // The function gets invoked at the global scope
+        // expected output: undefined
+
+        const boundGetX = unboundGetX.bind(module);
+        console.log(boundGetX());
+        // expected output: 42
+
+        function DelayedGreeter(name) {
+            this.name = name;
+        }
+
+        // Node.js 디자인 패턴 : 27페이지.
+        DelayedGreeter.prototype.greet = function () {
+            setTimeout((function () {
+                console.log('Hello, ' + this.name);
+            }).bind(this), 500);
+        }
+        const greeter = new DelayedGreeter('World');
+        greeter.greet();
+
+        // function getData() {
+        //     return new Promise(function (resolve, reject) {
+        //         $.get('url 주소/products/1', function (response) {
+        //             if (response) {
+        //                 resolve(response);
+        //             }
+        //             reject(new Error("Request is failed"));
+        //         });
+        //     });
+        // }
+
+        // // 위 $.get() 호출 결과에 따라 'response' 또는 'Error' 출력
+        // getData().then(function (data) {
+        //     console.log(data); // response 값 출력
+        // }).catch(function (err) {
+        //     console.error(err); // Error 출력
+        // });
+    </script>
+
+</body>
+
+</html>
