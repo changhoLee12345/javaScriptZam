@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체를 활용해서 테이블형식으로 나오도록.</title>
+</head>
+
+<body>
+    <script>
+        function Table(param) {
+            this.members = param;
+            this.addMember = function (member) {
+                this.members.push(member);
+            }
+            this.showList = function () {
+                let str = '<table border=1>';
+
+                this.members.forEach((member, idx) => {
+                    if (idx == 0) {
+                        str += '<tr>';
+                        for (let prop in member) {
+                            str += `<th>${prop}</th>`;
+                        }
+                        str += '</tr>';
+                    }
+                    str += '<tr>';
+                    for (let prop in member) {
+                        str += `<td>${member[prop]}</td>`;
+                    }
+                    str += '</tr>';
+                });
+                str += '</table>';
+                return str;
+            }
+        }
+
+        let members = [{ id: 'user1', name: '홍길동', age: 20 },
+                       { id: 'user2', name: '김명식', age: 24 },
+                       { id: 'user3', name: '최을식', age: 25 }
+                      ]
+        let t1 = new Table(members);
+        t1.addMember({ id: 'user4', name: '박명식', age: 28 });
+        document.write(t1.showList());
+    </script>
+</body>
+
+</html>

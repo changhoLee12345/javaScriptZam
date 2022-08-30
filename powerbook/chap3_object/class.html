@@ -100,6 +100,11 @@
         console.log(s1.gender)
         s1.gender = 'female';
         console.log(s1.gender)
+
+        Student.prototype.showInfo = function () {
+            console.log(this.name)
+        }
+        s1.showInfo();
         /////////////////////////////////////////////////////////
     </script>
 </body>
