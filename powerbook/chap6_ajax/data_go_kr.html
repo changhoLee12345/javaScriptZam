@@ -73,70 +73,76 @@
 
 
     <script>
-        // global variable
-        let gdata;
+        let obj = {};
 
-        let url =
-            `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=qCwQYxNXeK%2FaB1Ngf9oNZDttjmjQ6ku1OdR6%2Fd0Jj5EIdqOxMXolplih%2BYjTqB4uxCuK636co3tf9T5%2Fr9OLvw%3D%3D`;
-        fetch(url, {
-                method: 'get'
-            })
-            .then(result => result.json())
-            .then(showList)
-            .catch(error => console.log(error))
+        obj.act = function () {
 
-        function showList(result) {
-            console.log(result);
-            let data = result.data;
+            // global variable
+            let gdata;
 
-            gdata = data; // 전체 리스트에서 조회하기.
+            let url =
+                `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=qCwQYxNXeK%2FaB1Ngf9oNZDttjmjQ6ku1OdR6%2Fd0Jj5EIdqOxMXolplih%2BYjTqB4uxCuK636co3tf9T5%2Fr9OLvw%3D%3D`;
+            fetch(url, {
+                    method: 'get'
+                })
+                .then(result => result.json())
+                .then(showList)
+                .catch(error => console.log(error))
 
-            let tbody = document.getElementById('list')
-            data.forEach((center, idx) => {
-                if (idx < 10)
-                    tbody.append(makeTr(center))
-            })
+            function showList(result) {
+                console.log(result);
+                let data = result.data;
 
+                gdata = data; // 전체 리스트에서 조회하기.
+
+                let tbody = document.getElementById('list')
+                data.forEach((center, idx) => {
+                    if (idx < 10)
+                        tbody.append(makeTr(center))
+                })
+
+            }
+
+            function makeTr(center) {
+                let tr = document.createElement('tr');
+
+                tr.addEventListener('mouseover', showAdditionInfo);
+                tr.addEventListener('mouseout', hideAdditionInfo);
+
+                let props = ['id', 'centerName', 'sido', 'sigungu', 'phoneNumber'];
+                props.forEach(prop => {
+                    let td = document.createElement('td');
+                    td.innerText = center[prop];
+
+                    tr.append(td);
+                })
+                return tr;
+            }
+
+            function showAdditionInfo(e) {
+                let id = this.firstElementChild.textContent;
+                // console.log(e.screenX, e.screenY);
+
+                // document.querySelector('#position').style.opacity = .5;
+                // document.querySelector('#position').style.top = (e.screenY - 150) + 'px';
+                // document.querySelector('#position').style.left = (e.screenX + 20) + 'px';
+
+                let spans = document.querySelectorAll('#addInfo>ul>li>span')
+                gdata.forEach(center => {
+                    if (center.id == id) {
+                        spans[0].textContent = center.org;
+                        spans[1].textContent = center.lat;
+                        spans[2].textContent = center.lng;
+                        spans[3].textContent = center.address;
+                    }
+                })
+            }
+
+            function hideAdditionInfo() {
+                // document.querySelector('#position').style.display = 'none';
+            }
         }
-
-        function makeTr(center) {
-            let tr = document.createElement('tr');
-
-            tr.addEventListener('mouseover', showAdditionInfo);
-            tr.addEventListener('mouseout', hideAdditionInfo);
-
-            let props = ['id', 'centerName', 'sido', 'sigungu', 'phoneNumber'];
-            props.forEach(prop => {
-                let td = document.createElement('td');
-                td.innerText = center[prop];
-
-                tr.append(td);
-            })
-            return tr;
-        }
-
-        function showAdditionInfo(e) {
-            let id = this.firstElementChild.textContent;
-            // console.log(e.screenX, e.screenY);
-
-            // document.querySelector('#position').style.opacity = .5;
-            // document.querySelector('#position').style.top = (e.screenY - 150) + 'px';
-            // document.querySelector('#position').style.left = (e.screenX + 20) + 'px';
-
-            let spans = document.querySelectorAll('#addInfo>ul>li>span')
-            gdata.forEach(center => {
-                if (center.id == id) {
-                    spans[0].textContent = center.org;
-                    spans[1].textContent = center.lat;
-                    spans[2].textContent = center.lng;
-                    spans[3].textContent = center.address;
-                }
-            })
-        }
-
-        function hideAdditionInfo() {
-            // document.querySelector('#position').style.display = 'none';
-        }
+        obj.act();
     </script>
 </body>
 
