@@ -26,30 +26,32 @@
             color: green;
         }
 
-        div#position {
-            width: 300px;
-            height: 70px;
-            background-color: yellow;
-            color: green;
-            position: relative;
-            top: 100px;
-            left: 30px;
-            opacity: 0;
-            /* display: none; */
+        div#piechart {
+            clear: both;
+            height: 400px;
         }
     </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
-    <div id="position">
-        <ul>
-            <li>국립중앙의료원</li>
-            <li>서울특별시 중구 을지로 39길 29</li>
-            <li>Nicegood</li>
-        </ul>
-    </div>
 
-    <h3>시도정보</h3>
+    <ul>
+        <li>
+            <h3>시도정보</h3>
+        </li>
+        <li>
+            <label for="sido">시도검색: <input type="text" name="sido" id="sido"></label>
+            <button id="searchBtn">찾기</button>
+        </li>
+        <li>
+            <label for="slist">시도선택: </label>
+            <select name="slist" id="slist">
+                <option value="all">선택</option>
+            </select>
+        </li>
+    </ul>
+
 
     <table border="1">
         <thead>
@@ -69,7 +71,9 @@
             <li>lng: <span>234.3423432</span></li>
             <li>address: <span>서울특별시 중구 을지로 39길 29</span></li>
         </ul>
+
     </div>
+    <div id="piechart"></div>
 
 
     <script>
@@ -77,8 +81,15 @@
 
         obj.act = function () {
 
+            // 찾기 이벤트 등록.
+            document.getElementById('searchBtn').addEventListener('click', findSidoFnc)
+
+            document.getElementById('slist').addEventListener('change', findSidoFnc)
+
             // global variable
-            let gdata;
+            let gdata = [],
+                sidoData = [],
+                chartData = [];
 
             let url =
                 `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=qCwQYxNXeK%2FaB1Ngf9oNZDttjmjQ6ku1OdR6%2Fd0Jj5EIdqOxMXolplih%2BYjTqB4uxCuK636co3tf9T5%2Fr9OLvw%3D%3D`;
@@ -99,8 +110,75 @@
                 data.forEach((center, idx) => {
                     if (idx < 10)
                         tbody.append(makeTr(center))
+
+                    // 시도 리스트 배열 생성.
+                    if (sidoData.indexOf(center.sido) == -1)
+                        sidoData.push(center.sido);
+
+                    // chart만들기 위한 데이터. => [['경기도', 2],['대전광역시', 3],['서울특별시', 23],['광주광역시', 5] ... ]
+                    let existChart = chartData.find(chart => chart[0] == center.sido);
+                    if (existChart) {
+                        existChart[1]++;
+                    } else {
+                        chartData.push([center.sido, 1]);
+                    }
+
                 })
 
+                makeList();
+
+                makeChart();
+
+            }
+
+            function findSidoFnc(e) {
+                console.log(e)
+                let find_sido;
+                if (e.target.nodeName == 'BUTTON') {
+                    find_sido = document.getElementById('sido').value;
+                } else {
+                    find_sido = e.target.value;
+                }
+
+                let list = document.getElementById('list')
+                document.querySelectorAll('#list tr').forEach(tr => tr.remove())
+                gdata.forEach(center => {
+                    if (center.sido.startsWith(find_sido)) {
+                        list.append(makeTr(center));
+                    }
+                })
+            }
+
+            function makeChart() {
+                google.charts.load('current', {
+                    'packages': ['corechart']
+                });
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                    chartData.unshift(['sido', 'cnt'])
+                    var data = google.visualization.arrayToDataTable(chartData);
+
+                    var options = {
+                        title: '코로나 정보 센터'
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                    chart.draw(data, options);
+                }
+
+            }
+
+            function makeList() {
+                let slist = document.getElementById('slist')
+                sidoData.forEach(sido => {
+                    let opt = document.createElement('option')
+                    opt.value = sido;
+                    opt.textContent = sido;
+
+                    slist.append(opt);
+                })
             }
 
             function makeTr(center) {
