@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 70%;
+            float: left;
+            border: 1px solid green;
+        }
+
+        div#addInfo {
+            width: 30%;
+            float: left;
+            border: 1px solid green;
+            background-color: yellow;
+            opacity: 0.5;
+            color: green;
+        }
+
+        div#position {
+            width: 300px;
+            height: 70px;
+            background-color: yellow;
+            color: green;
+            position: relative;
+            top: 100px;
+            left: 30px;
+            opacity: 0;
+            /* display: none; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="position">
+        <ul>
+            <li>국립중앙의료원</li>
+            <li>서울특별시 중구 을지로 39길 29</li>
+            <li>Nicegood</li>
+        </ul>
+    </div>
+
+    <h3>시도정보</h3>
+
+    <table border="1">
+        <thead>
+            <th>아이디</th>
+            <th>센터명</th>
+            <th>시도</th>
+            <th>시군구</th>
+            <th>연락처</th>
+        </thead>
+        <tbody id="list"></tbody>
+    </table>
+
+    <div id="addInfo">
+        <ul>
+            <li>org: <span>국립중앙의료원</span></li>
+            <li>lat: <span>12.34343</span></li>
+            <li>lng: <span>234.3423432</span></li>
+            <li>address: <span>서울특별시 중구 을지로 39길 29</span></li>
+        </ul>
+    </div>
+
+
+    <script>
+        // global variable
+        let gdata;
+
+        let url =
+            `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=qCwQYxNXeK%2FaB1Ngf9oNZDttjmjQ6ku1OdR6%2Fd0Jj5EIdqOxMXolplih%2BYjTqB4uxCuK636co3tf9T5%2Fr9OLvw%3D%3D`;
+        fetch(url, {
+                method: 'get'
+            })
+            .then(result => result.json())
+            .then(showList)
+            .catch(error => console.log(error))
+
+        function showList(result) {
+            console.log(result);
+            let data = result.data;
+
+            gdata = data; // 전체 리스트에서 조회하기.
+
+            let tbody = document.getElementById('list')
+            data.forEach((center, idx) => {
+                if (idx < 10)
+                    tbody.append(makeTr(center))
+            })
+
+        }
+
+        function makeTr(center) {
+            let tr = document.createElement('tr');
+
+            tr.addEventListener('mouseover', showAdditionInfo);
+            tr.addEventListener('mouseout', hideAdditionInfo);
+
+            let props = ['id', 'centerName', 'sido', 'sigungu', 'phoneNumber'];
+            props.forEach(prop => {
+                let td = document.createElement('td');
+                td.innerText = center[prop];
+
+                tr.append(td);
+            })
+            return tr;
+        }
+
+        function showAdditionInfo(e) {
+            let id = this.firstElementChild.textContent;
+            // console.log(e.screenX, e.screenY);
+
+            // document.querySelector('#position').style.opacity = .5;
+            // document.querySelector('#position').style.top = (e.screenY - 150) + 'px';
+            // document.querySelector('#position').style.left = (e.screenX + 20) + 'px';
+
+            let spans = document.querySelectorAll('#addInfo>ul>li>span')
+            gdata.forEach(center => {
+                if (center.id == id) {
+                    spans[0].textContent = center.org;
+                    spans[1].textContent = center.lat;
+                    spans[2].textContent = center.lng;
+                    spans[3].textContent = center.address;
+                }
+            })
+        }
+
+        function hideAdditionInfo() {
+            // document.querySelector('#position').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
