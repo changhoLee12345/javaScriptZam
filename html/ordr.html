@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="add">
+        <input type="number" id="addNum">
+        <button id="addBtn">add</button>
+    </div>
+    <div id="show">
+        <ul id="list">
+            <li data="10">10</li>
+        </ul>
+    </div>
+    <script>
+        document.getElementById('addBtn').addEventListener('click', addFunc);
+
+        function addFunc() {
+            let numb = document.getElementById('addNum').value;
+            let checked = false; // 입력여부를 체크하기 위한 변수.
+
+            document.querySelectorAll('#list>li[data]').forEach((li, ix, ar) => {
+                if (!checked && parseInt(li.textContent) > numb) { // 입력값이 비교대상의 값보다 적을 경우에는 앞에 추가.
+                    li.before(makeList(numb));
+                    checked = true;
+                }
+                if (ix == ar.length - 1) {
+                    if (!checked) // 추가한 적이 없는 경우에는..마지막 순번에 제일 마지막 위치에 추가.
+                        li.after(makeList(numb));
+
+                    checked = false;
+                }
+            })
+        }
+
+        function makeList(numb) {
+            let li = document.createElement('li');
+            li.setAttribute('data', numb);
+            li.textContent = numb;
+            return li;
+        }
+    </script>
+</body>
+
+</html>
